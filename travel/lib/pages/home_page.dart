@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                     scrollNotification.depth == 0) {
                   //该方法会监听所有的滚动，包括列表里面的banner的滚动，需要过滤如下：
                   //1.滚动且是列表滚动的时候(刚进入的时候也会回调，所以需要加此判断)
-                  //2.深度等于0，也就是child中的第一个View ListView 滚动的时候
+                  //2.scrollNotification.depth == 0 表示 scrollNotification 的深度是0，即第0个元素，也就是child中的第一个View ListView 滚动的时候
                   //再执行下面的方法。
                   _onScroll(scrollNotification.metrics.pixels);
                 }
