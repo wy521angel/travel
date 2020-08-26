@@ -39,3 +39,4 @@ class HomeModel {
       salesBox: SalesBoxModel.fromJson(json['salesBox']),
     );
   }
+}
