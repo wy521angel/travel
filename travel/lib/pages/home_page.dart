@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:travel/dao/home_dao.dart';
+import 'package:travel/model/common_model.dart';
 import 'package:travel/model/home_model.dart';
+import 'package:travel/widget/local_nav.dart';
 
 const APPBAR_SCROLL_OFFSET = 100;
 
@@ -20,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   double appBarAlpha = 0;
-  String resultString = "";
+  List<CommonModel> localNavList = [];
 
   @override
   void initState() {
@@ -54,21 +56,22 @@ class _HomePageState extends State<HomePage> {
 //    });
 
     //网络请求方法二
-//    try {
+    try {
       HomeModel model = await HomeDao.fetch();
       setState(() {
-        resultString = json.encode(model.config);
+        localNavList = model.localNavList;
       });
-//    } catch (e) {
-//      setState(() {
-//        resultString = e.toString();
-//      });
-//    }
+    } catch (e) {
+      setState(() {
+        print(e);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0Xfff2f2f2),
       body: Stack(
         children: [
           MediaQuery.removePadding(
@@ -102,10 +105,14 @@ class _HomePageState extends State<HomePage> {
                       pagination: SwiperPagination(),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
+                    child: LocalNav(localNavList: localNavList),
+                  ),
                   Container(
                     height: 800,
                     child: ListTile(
-                      title: Text(resultString),
+                      title: Text('resultString'),
                     ),
                   )
                 ],
