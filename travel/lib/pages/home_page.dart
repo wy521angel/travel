@@ -7,6 +7,7 @@ import 'package:travel/model/common_model.dart';
 import 'package:travel/model/grid_nav_model.dart';
 import 'package:travel/model/home_model.dart';
 import 'package:travel/model/sales_box_model.dart';
+import 'package:travel/pages/search_page.dart';
 import 'package:travel/widget/grid_nav.dart';
 import 'package:travel/widget/loading_container.dart';
 import 'package:travel/widget/local_nav.dart';
@@ -210,7 +211,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _jumpToSearch() {}
+  void _jumpToSearch() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SearchPage(
+                  hint: SEARCH_BAR_DEFAULT_TEXT,
+                )));
+  }
 
   void _jumpToSpeak() {}
 }
