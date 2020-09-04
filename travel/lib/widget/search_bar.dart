@@ -163,6 +163,8 @@ class _SearchBarState extends State<SearchBar> {
                           color: Colors.black,
                           fontWeight: FontWeight.w300),
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(0),
+                        isDense: true,
                         border: InputBorder.none,
                         hintText: widget.hint ?? '',
                         hintStyle: TextStyle(fontSize: 15),
