@@ -9,7 +9,7 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        GeneratedPluginRegistrant.registerWith(flutterEngine)
+//        GeneratedPluginRegistrant.registerWith(flutterEngine)
         val shimPluginRegistry = ShimPluginRegistry(flutterEngine)
         registerSelfPlugin(shimPluginRegistry);
     }

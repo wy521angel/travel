@@ -1,10 +1,9 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+import 'package:travel/pages/search_page.dart';
+import 'package:travel/plugin/asr_manager.dart';
 
 ///语音识别
 class SpeakPage extends StatefulWidget {
-
   @override
   _SpeakPageState createState() => _SpeakPageState();
 }
@@ -41,27 +40,47 @@ class _SpeakPageState extends State<SpeakPage>
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          padding: EdgeInsets.all(30),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _topItem(),
-                _bottomItem()
-              ],
-            ),
-          ),
-        )
-    );
+      padding: EdgeInsets.all(30),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [_topItem(), _bottomItem()],
+        ),
+      ),
+    ));
   }
 
   _speakStart() {
     controller.forward();
+    setState(() {
+      speakTips = '- 识别中 -';
+    });
+    AsrManager.start().then((text) {
+      if (text != null && text.length > 0) {
+        setState(() {
+          speakResult = text;
+        });
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SearchPage(
+                      keyword: speakResult,
+                    )));
+        print("--------" + text);
+      }
+    }).catchError((e) {
+      print("--------" + e.toString());
+    });
   }
 
   _speakStop() {
+    setState(() {
+      speakTips = '长按说话';
+    });
     controller.reset();
     controller.stop();
+    AsrManager.stop();
   }
 
   _topItem() {
@@ -69,18 +88,22 @@ class _SpeakPageState extends State<SpeakPage>
       children: [
         Padding(
           padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
-          child: Text('你可以这样说',
-            style: TextStyle(fontSize: 16, color: Colors.black54),),
+          child: Text(
+            '你可以这样说',
+            style: TextStyle(fontSize: 16, color: Colors.black54),
+          ),
         ),
-        Text('故宫门票\n北京一日游\n迪士尼乐园',
+        Text(
+          '故宫门票\n北京一日游\n迪士尼乐园',
           textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 15, color: Colors.grey
-          ),),
+          style: TextStyle(fontSize: 15, color: Colors.grey),
+        ),
         Padding(
           padding: EdgeInsets.all(20),
-          child: Text(speakResult,
-            style: TextStyle(color: Colors.blue),),
+          child: Text(
+            speakResult,
+            style: TextStyle(color: Colors.blue),
+          ),
         ),
       ],
     );
@@ -106,9 +129,13 @@ class _SpeakPageState extends State<SpeakPage>
                 children: [
                   Padding(
                     padding: EdgeInsets.all(10),
-                    child: Text(speakTips, style: TextStyle(
-                      color: Colors.blue, fontSize: 12,
-                    ),),
+                    child: Text(
+                      speakTips,
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 12,
+                      ),
+                    ),
                   ),
                   Stack(
                     children: [
@@ -169,7 +196,11 @@ class AnimatedMic extends AnimatedWidget {
           color: Colors.blue,
           borderRadius: BorderRadius.circular(MIC_SIZE / 2),
         ),
-        child: Icon(Icons.mic, color: Colors.white, size: 30,),
+        child: Icon(
+          Icons.mic,
+          color: Colors.white,
+          size: 30,
+        ),
       ),
     );
   }
