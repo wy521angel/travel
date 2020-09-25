@@ -8,6 +8,7 @@ import 'package:travel/model/grid_nav_model.dart';
 import 'package:travel/model/home_model.dart';
 import 'package:travel/model/sales_box_model.dart';
 import 'package:travel/pages/search_page.dart';
+import 'package:travel/pages/speak_page.dart';
 import 'package:travel/widget/grid_nav.dart';
 import 'package:travel/widget/loading_container.dart';
 import 'package:travel/widget/local_nav.dart';
@@ -220,5 +221,11 @@ class _HomePageState extends State<HomePage> {
                 )));
   }
 
-  void _jumpToSpeak() {}
+  void _jumpToSpeak() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SpeakPage(),
+        ));
+  }
 }
