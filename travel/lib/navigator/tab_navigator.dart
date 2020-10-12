@@ -30,6 +30,8 @@ class _TabNavigatorState extends State<TabNavigator> {
           TravelPage(),
           MyPage(),
         ],
+        //关闭整个Tab页面的联动
+        physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
