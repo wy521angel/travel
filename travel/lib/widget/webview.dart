@@ -10,7 +10,7 @@ class WebView extends StatefulWidget {
   final String statusBarColor;
   final String title;
   final bool hideAppBar;
-  final bool backForbid;
+  final bool backForbid;//是否禁用返回按钮
 
   WebView(
       {this.url,
